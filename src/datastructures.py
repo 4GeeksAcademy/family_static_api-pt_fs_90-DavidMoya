@@ -11,26 +11,41 @@ from random import randint
 class FamilyStructure:
     def __init__(self, last_name):
         self.last_name = last_name
-
-        # example list of members
+        self._next_id = 1
         self._members = []
 
-    # read-only: Use this method to generate random members ID's when adding members into the list
-    def _generateId(self):
-        return randint(0, 99999999)
+    # Este método genera un 'id' único al agregar miembros a la lista (no debes modificar esta función)
+    def _generate_id(self):
+        generated_id = self._next_id
+        self._next_id += 1
+        return generated_id
 
+    ## Debes implementar este método
+    ## Agrega un nuevo miembro a la lista de _members
     def add_member(self, member):
-        # fill this method and update the return
-        pass
+        member["id"] = self._generate_id()
+        member["last_name"] = self.last_name
+        member["lucky_numbers"] = list(member.get("lucky_numbers", set()))
+        self._members.append(member)
+        return(member)
+        
+        ## Debes implementar este método
+        ## Recorre la lista y elimina el miembro con el id proporcionado
 
     def delete_member(self, id):
-        # fill this method and update the return
-        pass
+        for position in range(len(self._members)):
+            if self._members[position]["id"] == id:
+                self._members.pop(position)
+                
+                return None
+            
+    ## Debes implementar este método
+    ## Recorre la lista y obtén el miembro con el id proporcionado  
 
     def get_member(self, id):
-        # fill this method and update the return
-        pass
+        for position in self._members:
+            if position["id"] == int(id):
+                return position
 
-    # this method is done, it returns a list with all the family members
-    def get_all_members(self):
+    def get_all_members(self, id):
         return self._members
